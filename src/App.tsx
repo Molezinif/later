@@ -110,7 +110,7 @@ function App() {
                       ...prev,
                       currentPage: pageWithBlankTask + 1
                     }))
-                    
+
                     setTimeout(() => {
                       setFocus(`todos.${pageWithBlankTask}.items.${blankTaskIndex}.value`)
                     }, 1)
@@ -174,19 +174,27 @@ function App() {
                       setShowMoreStuffToDoButton(currentPageFilled)
                     }}
                     onKeyDown={(e) => {
-                      if (e.key === 'Enter') {
-                        if (index === 4) {
-                          if (paginationProps.currentPage < paginationProps.totalPages) {
-                            setPaginationProps((prev) => ({ ...prev, currentPage: prev.currentPage + 1 }))
-                            setFocus(`todos.${paginationProps.currentPage}.items.0.value`)
-                          } else {
-                            setPaginationProps((prev) => ({ ...prev, currentPage: 1 }))
-                            setFocus(`todos.0.items.0.value`)
-                          }
-                        } else {
-                          setFocus(`todos.${paginationProps.currentPage - 1}.items.${index + 1}.value`)
-                        }
+                      if (e.key !== 'Enter') return
+
+                      const isLastItemOnPage = index === 4
+                      const isLastPage = paginationProps.currentPage === paginationProps.totalPages
+
+                      if (!isLastItemOnPage) {
+                        const nextItemPath = `todos.${paginationProps.currentPage - 1}.items.${index + 1}.value`
+                        setFocus(nextItemPath as `todos.${number}.items.${number}.value`)
+                        return
                       }
+
+                      const nextPage = isLastPage ? 1 : paginationProps.currentPage + 1
+                      setPaginationProps((prev) => ({ ...prev, currentPage: nextPage }))
+
+                      const nextFocusPath = isLastPage
+                        ? 'todos.0.items.0.value'
+                        : `todos.${paginationProps.currentPage}.items.0.value`
+
+                      requestAnimationFrame(() => {
+                        setFocus(nextFocusPath as `todos.${number}.items.${number}.value`)
+                      })
                     }}
                     type='text'
                     placeholder={index === 0 ? placeHolderSuggestion : ''}
