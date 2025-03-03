@@ -8,13 +8,10 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 import { Button } from './components/ui/button'
 import { catTalk } from './constants/cat-talk'
 import { Plus } from 'lucide-react'
-
-interface TodoForm {
-  todos: { page: number; items: { value: string }[] }[]
-}
+import { TCatEvent, ITodoForm } from './interfaces'
 
 function App() {
-  const { control, register, getValues, setFocus } = useForm<TodoForm>({
+  const { control, register, getValues, setFocus } = useForm<ITodoForm>({
     defaultValues: {
       todos: localStorage.getItem('todos')
         ? JSON.parse(localStorage.getItem('todos')!)
@@ -39,7 +36,7 @@ function App() {
 
   const [showMoreStuffToDoButton, setShowMoreStuffToDoButton] = useState(false)
 
-  const [catEvent, setCatEvent] = useState<any>({
+  const [catEvent, setCatEvent] = useState<TCatEvent>({
     message:
       localStorage.getItem('knownProcrastinator') === 'true'
         ? catTalk.initialMessageForVeterans
@@ -198,9 +195,9 @@ function App() {
                     }}
                     type='text'
                     placeholder={index === 0 ? placeHolderSuggestion : ''}
-                    className={`flex-grow p-3 bg-card border outline-none focus:ring-1 focus:ring-blue-500 dark:focus:ring-gray-300 dark:text-gray-50 text-zinc-950
+                    className={`flex-grow p-3 bg-card border-t border-x outline-none focus:ring-1 focus:ring-blue-500 dark:focus:ring-gray-300 dark:text-gray-50 text-zinc-950
                   ${index === 0 ? 'rounded-t-md' : ''}
-                  ${index === fields[paginationProps.currentPage - 1].items?.length - 1 ? 'rounded-b-md' : ''}`}
+                  ${index === fields[paginationProps.currentPage - 1].items?.length - 1 ? 'rounded-b-md border-b' : ''}`}
                   />
                 )
               })}
