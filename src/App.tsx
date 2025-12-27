@@ -103,7 +103,7 @@ function App() {
 
                   for (let i = formValues.length - 1; i >= 0; i--) {
                     const blankIndex = formValues[i].items.findIndex(
-                      (item: { value: string }) => item.value.trim()
+                      (item: { value: string }) => !item.value.trim()
                     )
                     if (blankIndex !== -1) {
                       pageWithBlankTask = i
