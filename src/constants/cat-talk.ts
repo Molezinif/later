@@ -1,5 +1,6 @@
 export const catTalk = {
-  initialMessage: 'First time here? Perfect, let me teach you the art of productive postponing... ',
+  initialMessage:
+    'First time here? Perfect, let me teach you the art of productive postponing... ',
   initialMessageForVeterans: 'Welcome back! Ready to procrastinate like a pro?',
   addPageMessage: `Perfect, let's pretend you're going to do all this one day...`,
   addAPage: [
@@ -17,7 +18,7 @@ export const catTalk = {
     "At this rate, you'll need a whole book of 'someday maybe'",
     "*sigh* Fine, here's more space for your theoretical productivity",
     "Adding pages won't make the tasks do themselves, you know...",
-    'Achievement unlocked: Master of Digital Hoarding!'
+    'Achievement unlocked: Master of Digital Hoarding!',
   ],
   enoughSpaceToAddPage: [
     'Hey, I see some empty spaces just begging for procrastination...',
@@ -34,6 +35,6 @@ export const catTalk = {
     "Ambitious today, aren't we? But you still have room for more delayed dreams here.",
     'Breaking news: Empty task slots found! Film at... well, later.',
     "Before we add more to your 'someday' list, there's space in your 'not today' list.",
-    'Your current page is still thirsty for more unfinished tasks...'
-  ]
+    'Your current page is still thirsty for more unfinished tasks...',
+  ],
 }

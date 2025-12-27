@@ -12,5 +12,5 @@ export const placeholderSuggestions = [
   'clean the kitchen?',
   'vacuum the house?',
   'dust the furniture?',
-  'clean the windows'
+  'clean the windows',
 ]

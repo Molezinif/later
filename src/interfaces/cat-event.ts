@@ -1,4 +1,4 @@
-export type TCatEvent = {
+export interface CatEvent {
   message: string
   showAddPageRequest: boolean
 }
