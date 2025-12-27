@@ -1,3 +1,3 @@
-export interface ITodoForm {
+export interface TodoForm {
   todos: { page: number; items: { value: string }[] }[]
 }

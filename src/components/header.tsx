@@ -1,16 +1,18 @@
+import { Moon, Sun } from 'lucide-react'
 import { redirectToMyGithub } from '@/lib/utils'
 import { useTheme } from './theme-provider'
 import { Button } from './ui/button'
-import { Moon, Sun } from 'lucide-react'
 
 export function Header() {
   const { setTheme, theme } = useTheme()
 
   return (
-    <header className='flex flex-row justify-between items-center p-4 border-grid sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60'>
-      <h1 className='scroll-m-20 text-3xl font-semibold tracking-tight dark:text-slate-50'>later</h1>
-      <div className='flex flex-row gap-3'>
-        <Button variant='ghost' size='icon' onClick={redirectToMyGithub}>
+    <header class='sticky top-0 z-50 flex w-full flex-row items-center justify-between border-grid border-b bg-background/95 p-4 backdrop-blur supports-[backdrop-filter]:bg-background/60'>
+      <h1 class='scroll-m-20 font-semibold text-3xl tracking-tight dark:text-slate-50'>
+        later
+      </h1>
+      <div class='flex flex-row gap-3'>
+        <Button onClick={redirectToMyGithub} size='icon' variant='ghost'>
           <svg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
             <title>GitHub</title>
             <path
@@ -20,8 +22,6 @@ export function Header() {
           </svg>
         </Button>
         <Button
-          variant='ghost'
-          size='icon'
           onClick={() => {
             if (theme === 'dark') {
               setTheme('light')
@@ -29,6 +29,8 @@ export function Header() {
               setTheme('dark')
             }
           }}
+          size='icon'
+          variant='ghost'
         >
           {theme === 'dark' ? <Moon color='white' /> : <Sun />}
         </Button>

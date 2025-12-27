@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-:root { 
+:root {
   line-height: 1.5;
   font-weight: 400;
 
@@ -14,7 +14,6 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-
 
 @media (prefers-color-scheme: light) {
   :root {
@@ -53,7 +52,7 @@
     --radius: 0.5rem;
   }
   .dark {
-    --background: 240 10% 3.9%
+    --background: 240 10% 3.9%;
     --foreground: 0 0% 98%;
     --card: 240 10% 3.9%;
     --card-foreground: 0 0% 98%;

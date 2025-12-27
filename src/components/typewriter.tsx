@@ -8,7 +8,9 @@ export function TypewriterText({ text = '' }: Readonly<TypewriterTextProps>) {
   const [displayedText, setDisplayedText] = useState('')
 
   useEffect(() => {
-    if (!text) return
+    if (!text) {
+      return
+    }
     let index = 0
     setDisplayedText('')
 
@@ -25,18 +27,12 @@ export function TypewriterText({ text = '' }: Readonly<TypewriterTextProps>) {
   }, [text])
 
   return (
-    <div className='flex flex-col w-full py-3'>
+    <div class='flex w-full flex-col py-3'>
       <p
-        className='dark:text-slate-50 max-h-[82%] overflow-y-auto [&::-webkit-scrollbar]:w-2
-          [&::-webkit-scrollbar-track]:rounded-md
-          [&::-webkit-scrollbar-thumb]:rounded-md
-          [&::-webkit-scrollbar-track]:bg-gray-100
-          [&::-webkit-scrollbar-thumb]:bg-gray-300
-          dark:[&::-webkit-scrollbar-track]:bg-neutral-700
-          dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500
-          self-start'
+        class='max-h-[82%] self-start overflow-y-auto dark:text-slate-50 [&::-webkit-scrollbar-thumb]:rounded-md [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500 [&::-webkit-scrollbar-track]:rounded-md [&::-webkit-scrollbar-track]:bg-gray-100 dark:[&::-webkit-scrollbar-track]:bg-neutral-700 [&::-webkit-scrollbar]:w-2'
+        // biome-ignore lint/security/noDangerouslySetInnerHtml: rich text
         dangerouslySetInnerHTML={{ __html: displayedText }}
-      ></p>
+      />
     </div>
   )
 }
