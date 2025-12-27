@@ -1,7 +1,14 @@
-import { Moon, Sun } from 'lucide-react'
+import { Languages, Moon, Sun } from 'lucide-react'
+import { getLocale, m, setLocale } from '@/lib/i18n'
 import { redirectToMyGithub } from '@/lib/utils'
 import { useTheme } from './theme-provider'
 import { Button } from './ui/button'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTriggerIcon,
+} from './ui/select'
 
 export function Header() {
   const { setTheme, theme } = useTheme()
@@ -9,9 +16,21 @@ export function Header() {
   return (
     <header class='sticky top-0 z-50 flex w-full flex-row items-center justify-between border-grid border-b bg-background/95 p-4 backdrop-blur supports-[backdrop-filter]:bg-background/60'>
       <h1 class='scroll-m-20 font-semibold text-3xl tracking-tight dark:text-slate-50'>
-        later
+        {m.app_title()}
       </h1>
       <div class='flex flex-row gap-3'>
+        <Select
+          onValueChange={(value) => setLocale(value as 'en' | 'pt')}
+          value={getLocale()}
+        >
+          <SelectTriggerIcon>
+            <Languages class='h-4 w-4' />
+          </SelectTriggerIcon>
+          <SelectContent>
+            <SelectItem value='en'>{m.language_en()}</SelectItem>
+            <SelectItem value='pt'>{m.language_pt()}</SelectItem>
+          </SelectContent>
+        </Select>
         <Button onClick={redirectToMyGithub} size='icon' variant='ghost'>
           <svg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
             <title>GitHub</title>

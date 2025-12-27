@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import type { FieldArrayWithId } from 'react-hook-form'
-import type { TodoForm } from '../interfaces/form'
+import type { TodoForm } from '../types/form'
 
 interface PaginationState {
   currentPage: number

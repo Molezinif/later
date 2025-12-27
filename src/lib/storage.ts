@@ -1,4 +1,4 @@
-import type { TodoForm } from '../interfaces/form'
+import type { TodoForm } from '../types/form'
 
 const STORAGE_KEY = 'todos'
 const KNOWN_PROCRASTINATOR_KEY = 'knownProcrastinator'

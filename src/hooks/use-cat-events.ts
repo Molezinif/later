@@ -1,16 +1,27 @@
-import { useState } from 'react'
-import { catTalk } from '../constants/cat-talk'
-import type { CatEvent } from '../interfaces/cat-event'
+import { useEffect, useState } from 'react'
+import { getCatTalk } from '../constants/cat-talk'
+import type { CatEvent } from '../types/cat-event'
 import { isKnownProcrastinator } from '../lib/storage'
 import { getRandomArrIndex } from '../lib/utils'
 
 export function useCatEvents() {
+  const catTalk = getCatTalk()
   const [catEvent, setCatEvent] = useState<CatEvent>({
     message: isKnownProcrastinator()
       ? catTalk.initialMessageForVeterans
       : catTalk.initialMessage,
     showAddPageRequest: false,
   })
+
+  useEffect(() => {
+    const updatedCatTalk = getCatTalk()
+    setCatEvent((prev) => ({
+      ...prev,
+      message: isKnownProcrastinator()
+        ? updatedCatTalk.initialMessageForVeterans
+        : updatedCatTalk.initialMessage,
+    }))
+  }, [])
 
   const showAddPageRequest = () => {
     setCatEvent({
@@ -35,17 +46,19 @@ export function useCatEvents() {
   }
 
   const showRandomAddPageMessage = () => {
+    const updatedCatTalk = getCatTalk()
     setCatEvent({
       ...catEvent,
-      message: getRandomArrIndex(catTalk.addAPage),
+      message: getRandomArrIndex(updatedCatTalk.addAPage),
       showAddPageRequest: false,
     })
   }
 
   const showRandomEnoughSpaceMessage = () => {
+    const updatedCatTalk = getCatTalk()
     setCatEvent({
       ...catEvent,
-      message: getRandomArrIndex(catTalk.enoughSpaceToAddPage),
+      message: getRandomArrIndex(updatedCatTalk.enoughSpaceToAddPage),
       showAddPageRequest: false,
     })
   }

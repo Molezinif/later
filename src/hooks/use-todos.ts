@@ -1,6 +1,6 @@
 import { useCallback, useEffect } from 'react'
 import { useFieldArray, useForm } from 'react-hook-form'
-import type { TodoForm } from '../interfaces/form'
+import type { TodoForm } from '../types/form'
 import {
   getTodosFromStorage,
   markAsKnownProcrastinator,

@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 import type { UseFormSetFocus } from 'react-hook-form'
-import type { TodoForm } from '../interfaces/form'
+import type { TodoForm } from '../types/form'
 
 interface UseTodoNavigationProps {
   currentPageIndex: number

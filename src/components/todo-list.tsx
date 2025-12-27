@@ -1,8 +1,8 @@
 import { useMemo } from 'react'
 import type { FieldArrayWithId } from 'react-hook-form'
 import { useFormContext } from 'react-hook-form'
-import { placeholderSuggestions } from '../constants/placeholder-suggestions'
-import type { TodoForm } from '../interfaces/form'
+import { getPlaceholderSuggestions } from '../constants/placeholder-suggestions'
+import type { TodoForm } from '../types/form'
 import { getRandomArrIndex } from '../lib/utils'
 import { TodoInput } from './todo-input'
 
@@ -23,7 +23,7 @@ export function TodoList({
   const { register } = useFormContext<TodoForm>()
   const currentPage = fields[currentPageIndex]
   const placeholder = useMemo(
-    () => getRandomArrIndex(placeholderSuggestions),
+    () => getRandomArrIndex(getPlaceholderSuggestions()),
     []
   )
 

@@ -1,4 +1,4 @@
-import './App.css'
+import './app-styles.css'
 import { Plus } from 'lucide-react'
 import { useCallback, useMemo } from 'react'
 import { FormProvider, useWatch } from 'react-hook-form'
@@ -11,6 +11,7 @@ import { usePagination } from './hooks/use-pagination'
 import { useShowMoreStuffButton } from './hooks/use-show-more-stuff-button'
 import { useTodoNavigation } from './hooks/use-todo-navigation'
 import { useTodos } from './hooks/use-todos'
+import { m } from './lib/i18n'
 import { countNonEmptyTasks, hasBlankTask } from './lib/validation'
 
 function App() {
@@ -94,7 +95,7 @@ function App() {
 
         <main class='flex w-full flex-1 flex-col items-center justify-center gap-2'>
           <h2 class='text-center font-semibold text-2xl dark:text-slate-50'>
-            what do you want to "do"?
+            {m.app_subtitle()}
           </h2>
           <div class='flex flex-col gap-1'>
             {fields.length > 1 && (
@@ -105,7 +106,7 @@ function App() {
                   variant='ghost'
                 >
                   <Plus />
-                  Add page
+                  {m.app_addPage()}
                 </Button>
               </div>
             )}
@@ -123,7 +124,7 @@ function App() {
                     viewBox='0 0 24 24'
                     xmlns='http://www.w3.org/2000/svg'
                   >
-                    <title>Previous page</title>
+                    <title>{m.app_previousPage()}</title>
                     <path
                       d='M16 5v2h-2V5h2zm-4 4V7h2v2h-2zm-2 2V9h2v2h-2zm0 2H8v-2h2v2zm2 2v-2h-2v2h2zm0 0h2v2h-2v-2zm4 4v-2h-2v2h2z'
                       fill='currentColor'
@@ -150,7 +151,7 @@ function App() {
                     viewBox='0 0 24 24'
                     xmlns='http://www.w3.org/2000/svg'
                   >
-                    <title>Next page</title>
+                    <title>{m.app_nextPage()}</title>
                     <path
                       d='M8 5v2h2V5H8zm4 4V7h-2v2h2zm2 2V9h-2v2h2zm0 2h2v-2h-2v2zm-2 2v-2h2v2h-2zm0 0h-2v2h2v-2zm-4 4v-2h2v2H8z'
                       fill='currentColor'
@@ -163,7 +164,8 @@ function App() {
             {fields.length > 1 && (
               <div class='mr-[50px] flex flex-1 justify-end bg-background'>
                 <p class='dark:text-slate-50'>
-                  Page {pagination.currentPage} of {pagination.totalPages}
+                  {m.app_page()} {pagination.currentPage} {m.app_of()}{' '}
+                  {pagination.totalPages}
                 </p>
               </div>
             )}
@@ -174,7 +176,7 @@ function App() {
               onClick={showAddPageRequest}
               variant='ghost'
             >
-              MORE STUFF TO DO??
+              {m.app_moreStuff()}
             </Button>
           )}
         </main>

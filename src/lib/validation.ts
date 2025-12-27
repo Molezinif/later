@@ -1,4 +1,4 @@
-import type { TodoForm } from '../interfaces/form'
+import type { TodoForm } from '../types/form'
 
 export function hasBlankTask(todos: TodoForm['todos']): {
   pageIndex: number

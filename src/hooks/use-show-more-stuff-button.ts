@@ -1,7 +1,7 @@
 import { useMemo } from 'react'
 import type { FieldArrayWithId } from 'react-hook-form'
 import { useWatch } from 'react-hook-form'
-import type { TodoForm } from '../interfaces/form'
+import type { TodoForm } from '../types/form'
 import { isPageFilled } from '../lib/validation'
 
 interface UseShowMoreStuffButtonProps {
