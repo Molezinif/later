@@ -15,6 +15,7 @@
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist",
     "knip": "knip",
+    "test:related": "vitest related --run --silent --",
     "test": "vitest --run",
     "test:ci": "vitest run --silent --coverage"
   },
