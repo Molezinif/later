@@ -1,18 +1,45 @@
-import { Moon, Sun } from 'lucide-react'
+import { Languages, Moon, Sun } from 'lucide-react'
+import { getLocale, m, setLocale } from '@/lib/i18n'
 import { redirectToMyGithub } from '@/lib/utils'
 import { useTheme } from './theme-provider'
 import { Button } from './ui/button'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTriggerIcon,
+} from './ui/select'
 
 export function Header() {
   const { setTheme, theme } = useTheme()
 
   return (
     <header class='sticky top-0 z-50 flex w-full flex-row items-center justify-between border-grid border-b bg-background/95 p-4 backdrop-blur supports-[backdrop-filter]:bg-background/60'>
-      <h1 class='scroll-m-20 font-semibold text-3xl tracking-tight dark:text-slate-50'>
-        later
+      <h1 class='scroll-m-20 font-semibold text-3xl text-foreground tracking-tight'>
+        {m.app_title()}
       </h1>
       <div class='flex flex-row gap-3'>
-        <Button onClick={redirectToMyGithub} size='icon' variant='ghost'>
+        <Select
+          onValueChange={(value) => {
+            setLocale(value as 'en' | 'pt')
+            document.documentElement.lang = value
+          }}
+          value={getLocale()}
+        >
+          <SelectTriggerIcon aria-label={m.app_language()}>
+            <Languages class='h-4 w-4' />
+          </SelectTriggerIcon>
+          <SelectContent>
+            <SelectItem value='en'>{m.language_en()}</SelectItem>
+            <SelectItem value='pt'>{m.language_pt()}</SelectItem>
+          </SelectContent>
+        </Select>
+        <Button
+          aria-label={m.app_github()}
+          onClick={redirectToMyGithub}
+          size='icon'
+          variant='ghost'
+        >
           <svg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
             <title>GitHub</title>
             <path
@@ -22,6 +49,7 @@ export function Header() {
           </svg>
         </Button>
         <Button
+          aria-label={theme === 'dark' ? m.app_themeLight() : m.app_themeDark()}
           onClick={() => {
             if (theme === 'dark') {
               setTheme('light')

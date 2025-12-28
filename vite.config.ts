@@ -1,4 +1,5 @@
 import path from 'node:path'
+import { paraglideVitePlugin } from '@inlang/paraglide-js'
 import react from '@vitejs/plugin-react'
 import type { Plugin } from 'vite'
 import { defineConfig } from 'vite'
@@ -24,7 +25,14 @@ function reactClassPlugin(): Plugin {
 }
 
 export default defineConfig({
-  plugins: [reactClassPlugin(), react()],
+  plugins: [
+    reactClassPlugin(),
+    react(),
+    paraglideVitePlugin({
+      project: './project.inlang',
+      outdir: './src/lib/paraglide',
+    }),
+  ],
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
@@ -34,5 +42,16 @@ export default defineConfig({
     outDir: 'dist',
     assetsDir: 'assets',
     emptyOutDir: true,
+    minify: 'esbuild',
+    cssMinify: true,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'react-vendor': ['react', 'react-dom'],
+          'ui-vendor': ['@radix-ui/react-select', '@radix-ui/react-slot'],
+          'form-vendor': ['react-hook-form'],
+        },
+      },
+    },
   },
 })
