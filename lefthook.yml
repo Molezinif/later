@@ -15,4 +15,4 @@ pre-push:
       run: pnpm run build
 
     - name: test
-      run: pnpm run test
+      run: vitest related {staged_files} --run --silent
