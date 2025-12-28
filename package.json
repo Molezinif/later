@@ -13,6 +13,7 @@
     "machine-translate": "inlang machine translate --project project.inlang",
     "knip": "knip",
     "test": "vitest",
+    "test:related": "vitest related {staged_files} --run --silent",
     "test:run": "vitest run",
     "test:unit": "vitest run tests/unit",
     "test:integration": "vitest run tests/integration"
