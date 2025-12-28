@@ -1,8 +1,15 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { getCatTalk } from '../constants/cat-talk'
 import { isKnownProcrastinator } from '../lib/storage'
 import { getRandomArrIndex } from '../lib/utils'
 import type { CatEvent } from '../types/cat-event'
+
+type CatTalkCategory =
+  | 'addAPage'
+  | 'enoughSpaceToAddPage'
+  | 'taskCompleted'
+  | 'taskAdded'
+  | 'emptyTaskDeleted'
 
 export function useCatEvents() {
   const catTalk = getCatTalk()
@@ -13,16 +20,6 @@ export function useCatEvents() {
     showAddPageRequest: false,
   })
 
-  useEffect(() => {
-    const updatedCatTalk = getCatTalk()
-    setCatEvent((prev) => ({
-      ...prev,
-      message: isKnownProcrastinator()
-        ? updatedCatTalk.initialMessageForVeterans
-        : updatedCatTalk.initialMessage,
-    }))
-  }, [])
-
   const showAddPageRequest = () => {
     setCatEvent({
       ...catEvent,
@@ -30,62 +27,12 @@ export function useCatEvents() {
     })
   }
 
-  const hideAddPageRequest = () => {
+  const showRandomMessage = (category: CatTalkCategory) => {
+    const catTalk = getCatTalk()
+    const messages = catTalk[category] as string[]
     setCatEvent({
       ...catEvent,
-      showAddPageRequest: false,
-    })
-  }
-
-  const showMessage = (message: string) => {
-    setCatEvent({
-      ...catEvent,
-      message,
-      showAddPageRequest: false,
-    })
-  }
-
-  const showRandomAddPageMessage = () => {
-    const updatedCatTalk = getCatTalk()
-    setCatEvent({
-      ...catEvent,
-      message: getRandomArrIndex(updatedCatTalk.addAPage),
-      showAddPageRequest: false,
-    })
-  }
-
-  const showRandomEnoughSpaceMessage = () => {
-    const updatedCatTalk = getCatTalk()
-    setCatEvent({
-      ...catEvent,
-      message: getRandomArrIndex(updatedCatTalk.enoughSpaceToAddPage),
-      showAddPageRequest: false,
-    })
-  }
-
-  const showRandomTaskCompletedMessage = () => {
-    const updatedCatTalk = getCatTalk()
-    setCatEvent({
-      ...catEvent,
-      message: getRandomArrIndex(updatedCatTalk.taskCompleted),
-      showAddPageRequest: false,
-    })
-  }
-
-  const showRandomTaskAddedMessage = () => {
-    const updatedCatTalk = getCatTalk()
-    setCatEvent({
-      ...catEvent,
-      message: getRandomArrIndex(updatedCatTalk.taskAdded),
-      showAddPageRequest: false,
-    })
-  }
-
-  const showRandomEmptyTaskDeletedMessage = () => {
-    const updatedCatTalk = getCatTalk()
-    setCatEvent({
-      ...catEvent,
-      message: getRandomArrIndex(updatedCatTalk.emptyTaskDeleted),
+      message: getRandomArrIndex(messages),
       showAddPageRequest: false,
     })
   }
@@ -101,13 +48,13 @@ export function useCatEvents() {
   return {
     catEvent,
     showAddPageRequest,
-    hideAddPageRequest,
-    showMessage,
-    showRandomAddPageMessage,
-    showRandomEnoughSpaceMessage,
-    showRandomTaskCompletedMessage,
-    showRandomTaskAddedMessage,
-    showRandomEmptyTaskDeletedMessage,
+    showRandomAddPageMessage: () => showRandomMessage('addAPage'),
+    showRandomEnoughSpaceMessage: () =>
+      showRandomMessage('enoughSpaceToAddPage'),
+    showRandomTaskCompletedMessage: () => showRandomMessage('taskCompleted'),
+    showRandomTaskAddedMessage: () => showRandomMessage('taskAdded'),
+    showRandomEmptyTaskDeletedMessage: () =>
+      showRandomMessage('emptyTaskDeleted'),
     clearMessage,
   }
 }

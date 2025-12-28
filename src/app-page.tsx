@@ -4,15 +4,20 @@ import { useCallback, useMemo } from 'react'
 import { FormProvider, useWatch } from 'react-hook-form'
 import { CatDialog } from './components/cat-dialog'
 import { Header } from './components/header'
+import { PageNavigation } from './components/page-navigation'
 import { TodoList } from './components/todo-list'
 import { Button } from './components/ui/button'
 import { useCatEvents } from './hooks/use-cat-events'
 import { usePagination } from './hooks/use-pagination'
-import { useShowMoreStuffButton } from './hooks/use-show-more-stuff-button'
 import { useTodoNavigation } from './hooks/use-todo-navigation'
 import { useTodos } from './hooks/use-todos'
+import { getTodoPath } from './lib/form-paths'
 import { m } from './lib/i18n'
-import { countNonEmptyTasks, findFirstBlankTask } from './lib/validation'
+import {
+  countNonEmptyTasks,
+  findFirstBlankTask,
+  isPageFilled,
+} from './lib/validation'
 
 function App() {
   const { methods, fields, getValues, setFocus, addPage, clearItem } =
@@ -33,19 +38,20 @@ function App() {
     clearMessage,
   } = useCatEvents()
 
-  const showMoreStuffButton = useShowMoreStuffButton({
-    fields,
-    currentPageIndex: pagination.currentPage - 1,
-    totalPages: pagination.totalPages,
-    control: methods.control,
-  })
+  const showMoreStuffButton = useMemo(() => {
+    const currentPageIndex = pagination.currentPage - 1
+    if (fields.length === 0 || !todos || !todos[currentPageIndex]) {
+      return false
+    }
+    const currentPage = todos[currentPageIndex]
+    return isPageFilled(currentPage, pagination.totalPages)
+  }, [fields.length, pagination, todos])
 
   const { handleInputKeyDown, focusOnBlankTask } = useTodoNavigation({
     currentPageIndex: pagination.currentPage - 1,
     totalPages: pagination.totalPages,
     setFocus,
     goToPage,
-    goToFirstPage: () => goToPage(1),
   })
 
   const handleAddPageClick = useCallback(() => {
@@ -76,17 +82,41 @@ function App() {
 
   const handlePreviousPage = useCallback(() => {
     goToPreviousPage()
-    setFocus(
-      `todos.${pagination.currentPage - 2}.items.0.value` as `todos.${number}.items.${number}.value`
-    )
+    setFocus(getTodoPath(pagination.currentPage - 2, 0))
   }, [goToPreviousPage, pagination.currentPage, setFocus])
 
   const handleNextPage = useCallback(() => {
     goToNextPage()
-    setFocus(
-      `todos.${pagination.currentPage}.items.0.value` as `todos.${number}.items.${number}.value`
-    )
+    setFocus(getTodoPath(pagination.currentPage, 0))
   }, [goToNextPage, pagination.currentPage, setFocus])
+
+  const handleClearItem = useCallback(
+    (pageIndex: number, itemIndex: number) => {
+      const result = clearItem(pageIndex, itemIndex)
+      if (result.hadValue) {
+        showRandomTaskCompletedMessage()
+        if (result.pageRemoved) {
+          const newTotalPages = Math.max(1, fields.length - 1)
+          const currentPageNum = pagination.currentPage
+          if (pageIndex < currentPageNum - 1) {
+            goToPage(currentPageNum - 1)
+          } else if (currentPageNum > newTotalPages) {
+            goToPage(newTotalPages)
+          }
+        }
+      } else {
+        showRandomEmptyTaskDeletedMessage()
+      }
+    },
+    [
+      clearItem,
+      fields.length,
+      goToPage,
+      pagination.currentPage,
+      showRandomTaskCompletedMessage,
+      showRandomEmptyTaskDeletedMessage,
+    ]
+  )
 
   const snowBallSize = useMemo(
     () => (todos ? countNonEmptyTasks(todos) : 0),
@@ -116,72 +146,29 @@ function App() {
               </div>
             )}
 
-            <div class='flex flex-row items-center'>
-              {fields.length > 1 && (
-                <Button
-                  class='text-foreground hover:bg-transparent'
-                  disabled={pagination.currentPage === 1}
-                  onClick={handlePreviousPage}
-                  variant='ghost'
-                >
-                  <svg
-                    fill='none'
-                    viewBox='0 0 24 24'
-                    xmlns='http://www.w3.org/2000/svg'
-                  >
-                    <title>{m.app_previousPage()}</title>
-                    <path
-                      d='M16 5v2h-2V5h2zm-4 4V7h2v2h-2zm-2 2V9h2v2h-2zm0 2H8v-2h2v2zm2 2v-2h-2v2h2zm0 0h2v2h-2v-2zm4 4v-2h-2v2h2z'
-                      fill='currentColor'
-                    />
-                  </svg>
-                </Button>
-              )}
+            {(() => {
+              const todoList = (
+                <TodoList
+                  currentPageIndex={pagination.currentPage - 1}
+                  fields={fields}
+                  onClearItem={handleClearItem}
+                  onInputKeyDown={handleInputKeyDown}
+                />
+              )
 
-              <TodoList
-                currentPageIndex={pagination.currentPage - 1}
-                fields={fields}
-                onClearItem={(pageIndex, itemIndex) => {
-                  const result = clearItem(pageIndex, itemIndex)
-                  if (result.hadValue) {
-                    showRandomTaskCompletedMessage()
-                    if (result.pageRemoved) {
-                      const newTotalPages = Math.max(1, fields.length - 1)
-                      const currentPageNum = pagination.currentPage
-                      if (pageIndex < currentPageNum - 1) {
-                        goToPage(currentPageNum - 1)
-                      } else if (currentPageNum > newTotalPages) {
-                        goToPage(newTotalPages)
-                      }
-                    }
-                  } else {
-                    showRandomEmptyTaskDeletedMessage()
-                  }
-                }}
-                onInputKeyDown={handleInputKeyDown}
-              />
-
-              {fields.length > 1 && (
-                <Button
-                  class='text-foreground hover:bg-transparent'
-                  disabled={pagination.currentPage === pagination.totalPages}
-                  onClick={handleNextPage}
-                  variant='ghost'
+              return fields.length > 1 ? (
+                <PageNavigation
+                  canGoNext={pagination.currentPage < pagination.totalPages}
+                  canGoPrevious={pagination.currentPage > 1}
+                  onNext={handleNextPage}
+                  onPrevious={handlePreviousPage}
                 >
-                  <svg
-                    fill='none'
-                    viewBox='0 0 24 24'
-                    xmlns='http://www.w3.org/2000/svg'
-                  >
-                    <title>{m.app_nextPage()}</title>
-                    <path
-                      d='M8 5v2h2V5H8zm4 4V7h-2v2h2zm2 2V9h-2v2h2zm0 2h2v-2h-2v2zm-2 2v-2h2v2h-2zm0 0h-2v2h2v-2zm-4 4v-2h2v2H8z'
-                      fill='currentColor'
-                    />
-                  </svg>
-                </Button>
-              )}
-            </div>
+                  {todoList}
+                </PageNavigation>
+              ) : (
+                todoList
+              )
+            })()}
 
             {fields.length > 1 && (
               <div class='mr-[50px] flex flex-1 justify-end bg-background'>

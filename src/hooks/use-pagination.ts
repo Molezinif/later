@@ -49,15 +49,10 @@ export function usePagination(
     }
   }
 
-  const goToFirstPage = () => {
-    goToPage(1)
-  }
-
   return {
     pagination,
     goToPage,
     goToNextPage,
     goToPreviousPage,
-    goToFirstPage,
   }
 }

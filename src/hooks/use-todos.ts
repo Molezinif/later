@@ -1,5 +1,6 @@
 import { useCallback, useEffect } from 'react'
 import { useFieldArray, useForm } from 'react-hook-form'
+import { ITEMS_PER_PAGE } from '../constants/todo'
 import {
   getTodosFromStorage,
   markAsKnownProcrastinator,
@@ -36,9 +37,26 @@ export function useTodos() {
 
   const addPage = useCallback(() => {
     const newPage = fields.length + 1
-    append({ page: newPage, items: new Array(5).fill({ value: '' }) })
+    append({
+      page: newPage,
+      items: new Array(ITEMS_PER_PAGE).fill({ value: '' }),
+    })
     return newPage
   }, [fields.length, append])
+
+  const reorganizeItems = useCallback(
+    (items: TodoForm['todos'][0]['items'], itemIndex: number) => {
+      const itemsWithoutClicked = items.filter((_, i) => i !== itemIndex)
+      const nonEmpty = itemsWithoutClicked.filter(
+        (item) => item.value.trim() !== ''
+      )
+      const empty = itemsWithoutClicked.filter(
+        (item) => item.value.trim() === ''
+      )
+      return [...nonEmpty, ...empty, { value: '' }].slice(0, items.length)
+    },
+    []
+  )
 
   const clearItem = useCallback(
     (pageIndex: number, itemIndex: number) => {
@@ -50,31 +68,17 @@ export function useTodos() {
         return { hadValue: false, pageRemoved: false }
       }
 
-      const itemsWithoutClicked = currentItems.filter(
-        (_, index) => index !== itemIndex
-      )
-
-      const nonEmptyItems = itemsWithoutClicked.filter(
-        (item) => item.value.trim() !== ''
-      )
-      const emptyItems = itemsWithoutClicked.filter(
-        (item) => item.value.trim() === ''
-      )
-
-      const totalItems = currentItems.length
-      const reorganizedItems = [
-        ...nonEmptyItems,
-        ...emptyItems,
-        { value: '' },
-      ].slice(0, totalItems)
+      const reorganizedItems = reorganizeItems(currentItems, itemIndex)
 
       methods.setValue(`todos.${pageIndex}.items`, reorganizedItems, {
         shouldValidate: true,
       })
 
-      const isPageEmpty = nonEmptyItems.length === 0
-      const totalPages = fields.length
-      const shouldRemovePage = isPageEmpty && totalPages > 1
+      const nonEmptyCount = reorganizedItems.filter(
+        (item) => item.value.trim() !== ''
+      ).length
+      const isPageEmpty = nonEmptyCount === 0
+      const shouldRemovePage = isPageEmpty && fields.length > 1
 
       if (shouldRemovePage) {
         remove(pageIndex)
@@ -87,7 +91,7 @@ export function useTodos() {
 
       return { hadValue: true, pageRemoved: false }
     },
-    [methods, getValues, fields.length, remove]
+    [methods, getValues, fields.length, remove, reorganizeItems]
   )
 
   return {

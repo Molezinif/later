@@ -1,5 +1,7 @@
 import { useCallback } from 'react'
 import type { UseFormSetFocus } from 'react-hook-form'
+import { LAST_ITEM_INDEX } from '../constants/todo'
+import { getTodoPath } from '../lib/form-paths'
 import type { TodoForm } from '../types/form'
 
 interface UseTodoNavigationProps {
@@ -7,7 +9,6 @@ interface UseTodoNavigationProps {
   totalPages: number
   setFocus: UseFormSetFocus<TodoForm>
   goToPage: (page: number) => void
-  goToFirstPage: () => void
 }
 
 export function useTodoNavigation({
@@ -15,7 +16,6 @@ export function useTodoNavigation({
   totalPages,
   setFocus,
   goToPage,
-  goToFirstPage,
 }: UseTodoNavigationProps) {
   const handleInputKeyDown = useCallback(
     (index: number, e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -23,31 +23,26 @@ export function useTodoNavigation({
         return
       }
 
-      const isLastItemOnPage = index === 4
+      const isLastItemOnPage = index === LAST_ITEM_INDEX
       const isLastPage = currentPageIndex + 1 === totalPages
 
       if (!isLastItemOnPage) {
-        const nextItemPath = `todos.${currentPageIndex}.items.${index + 1}.value`
-        setFocus(nextItemPath as `todos.${number}.items.${number}.value`)
+        setFocus(getTodoPath(currentPageIndex, index + 1))
         return
       }
 
       const nextPage = isLastPage ? 1 : currentPageIndex + 2
-      if (isLastPage) {
-        goToFirstPage()
-      } else {
-        goToPage(nextPage)
-      }
+      goToPage(nextPage)
 
       const nextFocusPath = isLastPage
-        ? 'todos.0.items.0.value'
-        : `todos.${currentPageIndex + 1}.items.0.value`
+        ? getTodoPath(0, 0)
+        : getTodoPath(currentPageIndex + 1, 0)
 
       requestAnimationFrame(() => {
-        setFocus(nextFocusPath as `todos.${number}.items.${number}.value`)
+        setFocus(nextFocusPath)
       })
     },
-    [currentPageIndex, totalPages, setFocus, goToPage, goToFirstPage]
+    [currentPageIndex, totalPages, setFocus, goToPage]
   )
 
   const focusOnBlankTask = useCallback(
@@ -57,9 +52,7 @@ export function useTodoNavigation({
         goToPage(targetPage)
       }
       requestAnimationFrame(() => {
-        setFocus(
-          `todos.${pageIndex}.items.${taskIndex}.value` as `todos.${number}.items.${number}.value`
-        )
+        setFocus(getTodoPath(pageIndex, taskIndex))
       })
     },
     [currentPageIndex, goToPage, setFocus]

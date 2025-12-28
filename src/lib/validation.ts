@@ -1,18 +1,5 @@
 import type { TodoForm } from '../types/form'
 
-export function hasBlankTask(todos: TodoForm['todos']): {
-  pageIndex: number
-  taskIndex: number
-} | null {
-  for (let i = todos.length - 1; i >= 0; i--) {
-    const blankIndex = todos[i].items.findIndex((item) => !item.value.trim())
-    if (blankIndex !== -1) {
-      return { pageIndex: i, taskIndex: blankIndex }
-    }
-  }
-  return null
-}
-
 export function findFirstBlankTask(
   todos: TodoForm['todos'],
   currentPageIndex: number
