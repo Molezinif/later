@@ -36,7 +36,7 @@ jobs:
         run: npx tsc --noEmit
 
       - name: Build
-        run: pnpm build◊
+        run: pnpm build
 
       - name: Test
         run: pnpm test
