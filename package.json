@@ -3,6 +3,7 @@
   "private": true,
   "version": "1.0.0",
   "type": "module",
+  "homepage": "https://Molezinif.github.io/later/",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
@@ -11,12 +12,11 @@
     "format": "biome format --write .",
     "preview": "vite preview",
     "machine-translate": "inlang machine translate --project project.inlang",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist",
     "knip": "knip",
-    "test": "vitest",
     "test:related": "vitest related {staged_files} --run --silent",
-    "test:run": "vitest run",
-    "test:unit": "vitest run tests/unit",
-    "test:integration": "vitest run tests/integration"
+    "test": "vitest"
   },
   "dependencies": {
     "@inlang/paraglide-js": "^2.7.1",
@@ -42,6 +42,7 @@
     "@types/react-dom": "^18.3.5",
     "@vitejs/plugin-react": "^4.3.4",
     "autoprefixer": "^10.4.20",
+    "gh-pages": "^6.3.0",
     "jsdom": "^27.4.0",
     "knip": "^5.78.0",
     "lefthook": "^2.0.13",

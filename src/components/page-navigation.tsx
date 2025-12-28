@@ -19,7 +19,7 @@ export function PageNavigation({
   return (
     <nav
       aria-label={m.app_pageNavigation()}
-      class='flex flex-row items-center gap-1 sm:gap-0'
+      class='flex flex-row items-center gap-2'
     >
       <Button
         aria-label={m.app_previousPage()}

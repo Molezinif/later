@@ -25,6 +25,7 @@ function reactClassPlugin(): Plugin {
 }
 
 export default defineConfig({
+  base: '/later/',
   plugins: [
     reactClassPlugin(),
     react(),
