@@ -4,6 +4,13 @@ interface TypewriterTextProps {
   text: string | undefined
 }
 
+function prefersReducedMotion(): boolean {
+  if (typeof window === 'undefined') {
+    return false
+  }
+  return window.matchMedia('(prefers-reduced-motion: reduce)').matches
+}
+
 export function TypewriterText({ text = '' }: Readonly<TypewriterTextProps>) {
   const [displayedText, setDisplayedText] = useState('')
 
@@ -11,6 +18,14 @@ export function TypewriterText({ text = '' }: Readonly<TypewriterTextProps>) {
     if (!text) {
       return
     }
+
+    const shouldAnimate = !prefersReducedMotion()
+
+    if (!shouldAnimate) {
+      setDisplayedText(text)
+      return
+    }
+
     let index = 0
     setDisplayedText('')
 

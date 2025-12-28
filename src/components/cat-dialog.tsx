@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react'
 import { m } from '@/lib/i18n'
 import { CatChar } from './cat-char'
 import { useTheme } from './theme-provider'
@@ -20,6 +21,20 @@ export function CatDialog({
   addPageCallback,
 }: Readonly<CatDialogProps>) {
   const { theme } = useTheme()
+  const dialogRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if ((showAddPageRequest || message) && dialogRef.current) {
+      const firstButton = dialogRef.current.querySelector(
+        'button'
+      ) as HTMLButtonElement | null
+      if (firstButton) {
+        requestAnimationFrame(() => {
+          firstButton.focus()
+        })
+      }
+    }
+  }, [showAddPageRequest, message])
 
   if (showAddPageRequest) {
     return (
@@ -28,6 +43,7 @@ export function CatDialog({
         aria-labelledby='cat-dialog-title'
         aria-modal='true'
         class='relative flex max-h-[152px] w-[800px] flex-row rounded-lg border bg-white dark:bg-background'
+        ref={dialogRef}
         role='dialog'
       >
         <Button
@@ -97,6 +113,7 @@ export function CatDialog({
       aria-labelledby='cat-message-title'
       aria-modal='true'
       class='relative flex max-h-[152px] w-[800px] flex-row rounded-lg border bg-white dark:bg-background'
+      ref={dialogRef}
       role='dialog'
     >
       <Button

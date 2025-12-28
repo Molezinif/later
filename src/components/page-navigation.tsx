@@ -17,7 +17,7 @@ export function PageNavigation({
   children,
 }: Readonly<PageNavigationProps>) {
   return (
-    <nav aria-label='Navegação de páginas' class='flex flex-row items-center'>
+    <nav aria-label={m.app_pageNavigation()} class='flex flex-row items-center'>
       <Button
         aria-label={m.app_previousPage()}
         class='text-foreground hover:bg-transparent focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2'

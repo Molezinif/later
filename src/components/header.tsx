@@ -20,10 +20,13 @@ export function Header() {
       </h1>
       <div class='flex flex-row gap-3'>
         <Select
-          onValueChange={(value) => setLocale(value as 'en' | 'pt')}
+          onValueChange={(value) => {
+            setLocale(value as 'en' | 'pt')
+            document.documentElement.lang = value
+          }}
           value={getLocale()}
         >
-          <SelectTriggerIcon>
+          <SelectTriggerIcon aria-label={m.app_language()}>
             <Languages class='h-4 w-4' />
           </SelectTriggerIcon>
           <SelectContent>
@@ -32,7 +35,7 @@ export function Header() {
           </SelectContent>
         </Select>
         <Button
-          aria-label='Abrir perfil no GitHub'
+          aria-label={m.app_github()}
           onClick={redirectToMyGithub}
           size='icon'
           variant='ghost'
@@ -46,11 +49,7 @@ export function Header() {
           </svg>
         </Button>
         <Button
-          aria-label={
-            theme === 'dark'
-              ? 'Alternar para tema claro'
-              : 'Alternar para tema escuro'
-          }
+          aria-label={theme === 'dark' ? m.app_themeLight() : m.app_themeDark()}
           onClick={() => {
             if (theme === 'dark') {
               setTheme('light')

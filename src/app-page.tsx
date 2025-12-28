@@ -128,7 +128,10 @@ function App() {
       <div class='flex min-h-screen flex-col font-bit'>
         <Header />
 
-        <main class='flex w-full flex-1 flex-col items-center justify-center gap-2'>
+        <main
+          class='flex w-full flex-1 flex-col items-center justify-center gap-2'
+          id='main-content'
+        >
           <h2 class='text-center font-semibold text-2xl text-foreground'>
             {m.app_subtitle()}
           </h2>
@@ -182,6 +185,7 @@ function App() {
           </div>
           {showMoreStuffButton && (
             <Button
+              aria-label={m.app_moreStuffLabel()}
               class='text-blue-600 hover:text-blue-700 hover:underline dark:text-blue-400 dark:hover:text-blue-300'
               onClick={showAddPageRequest}
               variant='ghost'
@@ -190,6 +194,10 @@ function App() {
             </Button>
           )}
         </main>
+
+        <div aria-atomic='true' aria-live='polite' class='sr-only'>
+          {catEvent.message && <span>{catEvent.message}</span>}
+        </div>
 
         <footer class='flex justify-end p-4'>
           <CatDialog
