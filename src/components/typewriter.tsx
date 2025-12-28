@@ -43,11 +43,9 @@ export function TypewriterText({ text = '' }: Readonly<TypewriterTextProps>) {
 
   return (
     <div class='flex w-full flex-col py-3'>
-      <p
-        class='max-h-[82%] self-start overflow-y-auto text-base text-foreground [&::-webkit-scrollbar-thumb]:rounded-md [&::-webkit-scrollbar-thumb]:bg-gray-400 dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500 [&::-webkit-scrollbar-track]:rounded-md [&::-webkit-scrollbar-track]:bg-gray-200 dark:[&::-webkit-scrollbar-track]:bg-neutral-700 [&::-webkit-scrollbar]:w-2'
-        // biome-ignore lint/security/noDangerouslySetInnerHtml: rich text
-        dangerouslySetInnerHTML={{ __html: displayedText }}
-      />
+      <p class='max-h-[82%] self-start overflow-y-auto text-base text-foreground [&::-webkit-scrollbar-thumb]:rounded-md [&::-webkit-scrollbar-thumb]:bg-gray-400 dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500 [&::-webkit-scrollbar-track]:rounded-md [&::-webkit-scrollbar-track]:bg-gray-200 dark:[&::-webkit-scrollbar-track]:bg-neutral-700 [&::-webkit-scrollbar]:w-2'>
+        {displayedText}
+      </p>
     </div>
   )
 }

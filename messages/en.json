@@ -90,7 +90,7 @@
   "cat_taskmew": "taskmew:",
   "cat_closeDialog": "Close dialog",
   "cat_close": "Close",
-  "cat_confirmAddPage": "Are you sure? You already have <span class=\"text-destructive font-bold\">{count}</span> tasks awaiting your goodwill...",
+  "cat_confirmAddPage": "Are you sure? You already have {count} tasks awaiting your goodwill...",
   "cat_taskCompleted_0": "Congratulations! You completed a task! Now you only have... all the others left. *sarcastic applause*",
   "cat_taskCompleted_1": "Wow, you actually did something! I'm impressed. No, really, I am. This is rare.",
   "cat_taskCompleted_2": "One task down! Only 847 more to go before you feel actually productive.",

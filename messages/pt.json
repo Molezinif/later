@@ -90,7 +90,7 @@
   "cat_taskmew": "taskmew:",
   "cat_closeDialog": "Fechar diálogo",
   "cat_close": "Fechar",
-  "cat_confirmAddPage": "Tem certeza? Você já tem <span class=\"text-destructive font-bold\">{count}</span> tarefas aguardando sua boa vontade...",
+  "cat_confirmAddPage": "Tem certeza? Você já tem {count} tarefas aguardando sua boa vontade...",
   "cat_taskCompleted_0": "Parabéns! Você completou uma tarefa! Agora só faltam... todas as outras. *aplausos sarcásticos*",
   "cat_taskCompleted_1": "Uau, você realmente fez algo! Estou impressionado. Não, sério, estou mesmo. Isso é raro.",
   "cat_taskCompleted_2": "Uma tarefa a menos! Só mais 847 para você se sentir produtivo de verdade.",

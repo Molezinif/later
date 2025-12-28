@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react'
 import { m } from '@/lib/i18n'
 import { CatChar } from './cat-char'
+import { ConfirmAddPageText } from './confirm-add-page-text'
 import { useTheme } from './theme-provider'
 import { TypewriterText } from './typewriter'
 import { Button } from './ui/button'
@@ -76,11 +77,7 @@ export function CatDialog({
             {m.cat_taskmew()}
           </h1>
           <div id='cat-dialog-description'>
-            <TypewriterText
-              text={m.cat_confirmAddPage({
-                count: snowBallSize ?? 0,
-              })}
-            />
+            <ConfirmAddPageText count={snowBallSize ?? 0} />
           </div>
           <div class='mt-2 flex w-full flex-col justify-end gap-2 sm:flex-row'>
             <Button
