@@ -3,7 +3,7 @@ pre-commit:
   jobs:
     - name: lint
       glob: "*.{js,ts,jsx,tsx,json}"
-      run: npx biome check {staged_files}
+      run: biome check {staged_files}
 
     - name: typecheck
       run: npx tsc --noEmit
