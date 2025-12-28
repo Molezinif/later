@@ -13,3 +13,6 @@ pre-push:
   jobs:
     - name: build
       run: pnpm run build
+
+    - name: test
+      run: pnpm run test
