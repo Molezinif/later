@@ -42,5 +42,16 @@ export default defineConfig({
     outDir: 'dist',
     assetsDir: 'assets',
     emptyOutDir: true,
+    minify: 'esbuild',
+    cssMinify: true,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'react-vendor': ['react', 'react-dom'],
+          'ui-vendor': ['@radix-ui/react-select', '@radix-ui/react-slot'],
+          'form-vendor': ['react-hook-form'],
+        },
+      },
+    },
   },
 })
