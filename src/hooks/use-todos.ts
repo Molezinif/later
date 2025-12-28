@@ -6,6 +6,7 @@ import {
   markAsKnownProcrastinator,
   saveTodosToStorage,
 } from '../lib/storage'
+import { reorganizeItems } from '../lib/todo-utils'
 import type { TodoForm } from '../types/form'
 
 export function useTodos() {
@@ -44,20 +45,6 @@ export function useTodos() {
     return newPage
   }, [fields.length, append])
 
-  const reorganizeItems = useCallback(
-    (items: TodoForm['todos'][0]['items'], itemIndex: number) => {
-      const itemsWithoutClicked = items.filter((_, i) => i !== itemIndex)
-      const nonEmpty = itemsWithoutClicked.filter(
-        (item) => item.value.trim() !== ''
-      )
-      const empty = itemsWithoutClicked.filter(
-        (item) => item.value.trim() === ''
-      )
-      return [...nonEmpty, ...empty, { value: '' }].slice(0, items.length)
-    },
-    []
-  )
-
   const clearItem = useCallback(
     (pageIndex: number, itemIndex: number) => {
       const formValues = getValues()
@@ -91,7 +78,7 @@ export function useTodos() {
 
       return { hadValue: true, pageRemoved: false }
     },
-    [methods, getValues, fields.length, remove, reorganizeItems]
+    [methods, getValues, fields.length, remove]
   )
 
   return {

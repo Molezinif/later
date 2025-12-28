@@ -41,7 +41,7 @@ A playful task management app that embraces procrastination with a sarcastic cat
 | **Styling** | Tailwind CSS, Radix UI |
 | **Forms** | React Hook Form |
 | **i18n** | Inlang Paraglide |
-| **Icons** | Lucide React, PixelArtIcons |
+| **Icons** | Lucide React |
 | **Linting** | Biome |
 
 ## Getting Started

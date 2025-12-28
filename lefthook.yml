@@ -1,0 +1,18 @@
+pre-commit:
+  parallel: true
+  jobs:
+    - name: lint
+      glob: "*.{js,ts,jsx,tsx,json}"
+      run: biome check {staged_files}
+
+    - name: typecheck
+      run: npx tsc --noEmit
+
+pre-push:
+  parallel: true
+  jobs:
+    - name: build
+      run: pnpm run build
+
+    - name: test
+      run: pnpm run test:related {push_files}
