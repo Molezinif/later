@@ -1,4 +1,4 @@
-import { useCallback } from 'react'
+import { useCallback, useEffect, useRef } from 'react'
 import type { UseFormSetFocus } from 'react-hook-form'
 import { LAST_ITEM_INDEX } from '../constants/todo'
 import { getTodoPath } from '../lib/form-paths'
@@ -17,6 +17,19 @@ export function useTodoNavigation({
   setFocus,
   goToPage,
 }: UseTodoNavigationProps) {
+  const pendingFocus = useRef<string | null>(null)
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: pendingFocus is a ref that triggers focus after page navigation - we intentionally react to currentPageIndex changes to focus the input after the new page renders
+  useEffect(() => {
+    if (pendingFocus.current) {
+      const focusPath = pendingFocus.current
+      pendingFocus.current = null
+      requestAnimationFrame(() => {
+        setFocus(focusPath as Parameters<typeof setFocus>[0])
+      })
+    }
+  }, [currentPageIndex, setFocus])
+
   const handleInputKeyDown = useCallback(
     (index: number, e: React.KeyboardEvent<HTMLInputElement>) => {
       if (e.key !== 'Enter') {
@@ -32,15 +45,12 @@ export function useTodoNavigation({
       }
 
       const nextPage = isLastPage ? 1 : currentPageIndex + 2
-      goToPage(nextPage)
-
       const nextFocusPath = isLastPage
         ? getTodoPath(0, 0)
         : getTodoPath(currentPageIndex + 1, 0)
 
-      requestAnimationFrame(() => {
-        setFocus(nextFocusPath)
-      })
+      pendingFocus.current = nextFocusPath
+      goToPage(nextPage)
     },
     [currentPageIndex, totalPages, setFocus, goToPage]
   )
@@ -48,12 +58,16 @@ export function useTodoNavigation({
   const focusOnBlankTask = useCallback(
     (pageIndex: number, taskIndex: number) => {
       const targetPage = pageIndex + 1
+      const focusPath = getTodoPath(pageIndex, taskIndex)
+
       if (currentPageIndex + 1 !== targetPage) {
+        pendingFocus.current = focusPath
         goToPage(targetPage)
+      } else {
+        requestAnimationFrame(() => {
+          setFocus(focusPath)
+        })
       }
-      requestAnimationFrame(() => {
-        setFocus(getTodoPath(pageIndex, taskIndex))
-      })
     },
     [currentPageIndex, goToPage, setFocus]
   )
