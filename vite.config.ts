@@ -40,7 +40,7 @@ export default defineConfig({
     },
   },
   build: {
-    outDir: 'dist',
+    outDir: 'dist/later',
     assetsDir: 'assets',
     emptyOutDir: true,
     minify: 'esbuild',

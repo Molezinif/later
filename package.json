@@ -3,7 +3,7 @@
   "private": true,
   "version": "1.0.0",
   "type": "module",
-  "homepage": "https://Molezinif.github.io/later/",
+  "homepage": "https://molezini.com/later/",
   "scripts": {
     "dev": "vite",
     "build": "paraglide-js compile --project ./project.inlang --outdir ./src/lib/paraglide && tsc -b && vite build",
