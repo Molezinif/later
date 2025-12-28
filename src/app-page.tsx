@@ -136,7 +136,8 @@ function App() {
             {fields.length > 1 && (
               <div class='mr-[48px] flex flex-1 justify-end bg-background'>
                 <Button
-                  class='text-blue-600 hover:text-blue-700 hover:underline dark:text-blue-400 dark:hover:text-blue-300'
+                  aria-label={`${m.app_addPage()} - Adicionar nova página de tarefas`}
+                  class='text-blue-600 hover:text-blue-700 hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:text-blue-400 dark:hover:text-blue-300'
                   onClick={handleAddPageClick}
                   variant='ghost'
                 >

@@ -160,5 +160,6 @@
   "cat_emptyTaskDeleted_24": "Você conseguiu fazer nada com nada! Isso é... uma conquista única, eu acho?",
   "language_en": "Inglês",
   "language_pt": "Português (BR)",
-  "done": "Feito?"
+  "done": "Feito?",
+  "app_task": "Tarefa"
 }

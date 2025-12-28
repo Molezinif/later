@@ -23,9 +23,16 @@ export function CatDialog({
 
   if (showAddPageRequest) {
     return (
-      <div class='relative flex max-h-[152px] w-[800px] flex-row rounded-lg border bg-white dark:bg-background'>
+      <div
+        aria-describedby='cat-dialog-description'
+        aria-labelledby='cat-dialog-title'
+        aria-modal='true'
+        class='relative flex max-h-[152px] w-[800px] flex-row rounded-lg border bg-white dark:bg-background'
+        role='dialog'
+      >
         <Button
-          class='absolute top-0 right-0'
+          aria-label={m.cat_closeDialog()}
+          class='absolute top-0 right-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2'
           onClick={handleCloseDialog}
           size='icon'
           variant='ghost'
@@ -46,19 +53,32 @@ export function CatDialog({
           <CatChar />
         </div>
         <div class='flex-1 p-3'>
-          <h1 class='font-semibold text-foreground text-lg'>
+          <h1
+            class='font-semibold text-foreground text-lg'
+            id='cat-dialog-title'
+          >
             {m.cat_taskmew()}
           </h1>
-          <TypewriterText
-            text={m.cat_confirmAddPage({
-              count: snowBallSize ?? 0,
-            })}
-          />
+          <div id='cat-dialog-description'>
+            <TypewriterText
+              text={m.cat_confirmAddPage({
+                count: snowBallSize ?? 0,
+              })}
+            />
+          </div>
           <div class='flex w-full flex-row justify-end gap-2'>
-            <Button onClick={handleCloseDialog} variant={'blue'}>
+            <Button
+              aria-label={m.app_completeTasks()}
+              onClick={handleCloseDialog}
+              variant={'blue'}
+            >
               {m.app_completeTasks()}
             </Button>
-            <Button onClick={addPageCallback} variant='destructive'>
+            <Button
+              aria-label={m.app_keepProcrastinating()}
+              onClick={addPageCallback}
+              variant='destructive'
+            >
               {m.app_keepProcrastinating()}
             </Button>
           </div>
@@ -72,9 +92,16 @@ export function CatDialog({
   }
 
   return (
-    <div class='relative flex max-h-[152px] w-[800px] flex-row rounded-lg border bg-white dark:bg-background'>
+    <div
+      aria-describedby='cat-message-description'
+      aria-labelledby='cat-message-title'
+      aria-modal='true'
+      class='relative flex max-h-[152px] w-[800px] flex-row rounded-lg border bg-white dark:bg-background'
+      role='dialog'
+    >
       <Button
-        class='absolute top-0 right-0'
+        aria-label={m.cat_close()}
+        class='absolute top-0 right-0 focus:outline-2 focus:outline-blue-500 focus:outline-offset-2'
         onClick={handleCloseDialog}
         size='icon'
         variant='ghost'
@@ -91,8 +118,15 @@ export function CatDialog({
         <CatChar />
       </div>
       <div class='h-full flex-1 p-3'>
-        <h1 class='font-semibold text-foreground text-lg'>{m.cat_taskmew()}</h1>
-        <TypewriterText text={message} />
+        <h1
+          class='font-semibold text-foreground text-lg'
+          id='cat-message-title'
+        >
+          {m.cat_taskmew()}
+        </h1>
+        <div id='cat-message-description'>
+          <TypewriterText text={message} />
+        </div>
       </div>
     </div>
   )

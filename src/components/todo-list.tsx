@@ -44,6 +44,7 @@ export function TodoList({
 
         return (
           <TodoInput
+            index={index}
             isFirst={isFirst}
             isLast={isLast}
             key={`todos.${currentPageIndex}.items.${

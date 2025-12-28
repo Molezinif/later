@@ -31,7 +31,12 @@ export function Header() {
             <SelectItem value='pt'>{m.language_pt()}</SelectItem>
           </SelectContent>
         </Select>
-        <Button onClick={redirectToMyGithub} size='icon' variant='ghost'>
+        <Button
+          aria-label='Abrir perfil no GitHub'
+          onClick={redirectToMyGithub}
+          size='icon'
+          variant='ghost'
+        >
           <svg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
             <title>GitHub</title>
             <path
@@ -41,6 +46,11 @@ export function Header() {
           </svg>
         </Button>
         <Button
+          aria-label={
+            theme === 'dark'
+              ? 'Alternar para tema claro'
+              : 'Alternar para tema escuro'
+          }
           onClick={() => {
             if (theme === 'dark') {
               setTheme('light')

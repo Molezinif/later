@@ -160,5 +160,6 @@
   "cat_emptyTaskDeleted_24": "You managed to do nothing with nothing! That's... a unique achievement, I guess?",
   "language_en": "English",
   "language_pt": "Portuguese (BR)",
-  "done": "Done?"
+  "done": "Done?",
+  "app_task": "Task"
 }
