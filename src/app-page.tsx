@@ -15,7 +15,8 @@ import { m } from './lib/i18n'
 import { countNonEmptyTasks, hasBlankTask } from './lib/validation'
 
 function App() {
-  const { methods, fields, getValues, setFocus, addPage } = useTodos()
+  const { methods, fields, getValues, setFocus, addPage, clearItem } =
+    useTodos()
   const todos = useWatch({
     control: methods.control,
     name: 'todos',
@@ -27,6 +28,8 @@ function App() {
     showAddPageRequest,
     showRandomAddPageMessage,
     showRandomEnoughSpaceMessage,
+    showRandomTaskCompletedMessage,
+    showRandomEmptyTaskDeletedMessage,
     clearMessage,
   } = useCatEvents()
 
@@ -66,7 +69,7 @@ function App() {
   const handleAddPage = useCallback(() => {
     showRandomAddPageMessage()
     const newPage = addPage()
-    goToPage(newPage)
+    goToPage(newPage, true)
   }, [addPage, goToPage, showRandomAddPageMessage])
 
   const handlePreviousPage = useCallback(() => {
@@ -94,14 +97,14 @@ function App() {
         <Header />
 
         <main class='flex w-full flex-1 flex-col items-center justify-center gap-2'>
-          <h2 class='text-center font-semibold text-2xl dark:text-slate-50'>
+          <h2 class='text-center font-semibold text-2xl text-foreground'>
             {m.app_subtitle()}
           </h2>
           <div class='flex flex-col gap-1'>
             {fields.length > 1 && (
-              <div class='mr-[40px] flex flex-1 justify-end bg-background'>
+              <div class='mr-[48px] flex flex-1 justify-end bg-background'>
                 <Button
-                  class='text-blue-400 hover:text-blue-400 hover:underline'
+                  class='text-blue-600 hover:text-blue-700 hover:underline dark:text-blue-400 dark:hover:text-blue-300'
                   onClick={handleAddPageClick}
                   variant='ghost'
                 >
@@ -114,7 +117,7 @@ function App() {
             <div class='flex flex-row items-center'>
               {fields.length > 1 && (
                 <Button
-                  class='dark:text-gray-50'
+                  class='text-foreground hover:bg-transparent'
                   disabled={pagination.currentPage === 1}
                   onClick={handlePreviousPage}
                   variant='ghost'
@@ -136,12 +139,29 @@ function App() {
               <TodoList
                 currentPageIndex={pagination.currentPage - 1}
                 fields={fields}
+                onClearItem={(pageIndex, itemIndex) => {
+                  const result = clearItem(pageIndex, itemIndex)
+                  if (result.hadValue) {
+                    showRandomTaskCompletedMessage()
+                    if (result.pageRemoved) {
+                      const newTotalPages = Math.max(1, fields.length - 1)
+                      const currentPageNum = pagination.currentPage
+                      if (pageIndex < currentPageNum - 1) {
+                        goToPage(currentPageNum - 1)
+                      } else if (currentPageNum > newTotalPages) {
+                        goToPage(newTotalPages)
+                      }
+                    }
+                  } else {
+                    showRandomEmptyTaskDeletedMessage()
+                  }
+                }}
                 onInputKeyDown={handleInputKeyDown}
               />
 
               {fields.length > 1 && (
                 <Button
-                  class='dark:text-gray-50'
+                  class='text-foreground hover:bg-transparent'
                   disabled={pagination.currentPage === pagination.totalPages}
                   onClick={handleNextPage}
                   variant='ghost'
@@ -163,7 +183,7 @@ function App() {
 
             {fields.length > 1 && (
               <div class='mr-[50px] flex flex-1 justify-end bg-background'>
-                <p class='dark:text-slate-50'>
+                <p class='text-base text-foreground'>
                   {m.app_page()} {pagination.currentPage} {m.app_of()}{' '}
                   {pagination.totalPages}
                 </p>
@@ -172,7 +192,7 @@ function App() {
           </div>
           {showMoreStuffButton && (
             <Button
-              class='text-blue-400 hover:text-blue-400 hover:underline'
+              class='text-blue-600 hover:text-blue-700 hover:underline dark:text-blue-400 dark:hover:text-blue-300'
               onClick={showAddPageRequest}
               variant='ghost'
             >

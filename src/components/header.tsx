@@ -15,7 +15,7 @@ export function Header() {
 
   return (
     <header class='sticky top-0 z-50 flex w-full flex-row items-center justify-between border-grid border-b bg-background/95 p-4 backdrop-blur supports-[backdrop-filter]:bg-background/60'>
-      <h1 class='scroll-m-20 font-semibold text-3xl tracking-tight dark:text-slate-50'>
+      <h1 class='scroll-m-20 font-semibold text-3xl text-foreground tracking-tight'>
         {m.app_title()}
       </h1>
       <div class='flex flex-row gap-3'>

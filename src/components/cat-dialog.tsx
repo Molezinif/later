@@ -46,7 +46,9 @@ export function CatDialog({
           <CatChar />
         </div>
         <div class='flex-1 p-3'>
-          <h1 class='font-semibold dark:text-slate-50'>{m.cat_taskmew()}</h1>
+          <h1 class='font-semibold text-foreground text-lg'>
+            {m.cat_taskmew()}
+          </h1>
           <TypewriterText
             text={m.cat_confirmAddPage({
               count: snowBallSize ?? 0,
@@ -89,7 +91,7 @@ export function CatDialog({
         <CatChar />
       </div>
       <div class='h-full flex-1 p-3'>
-        <h1 class='font-semibold dark:text-slate-50'>{m.cat_taskmew()}</h1>
+        <h1 class='font-semibold text-foreground text-lg'>{m.cat_taskmew()}</h1>
         <TypewriterText text={message} />
       </div>
     </div>

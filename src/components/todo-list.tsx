@@ -2,8 +2,8 @@ import { useMemo } from 'react'
 import type { FieldArrayWithId } from 'react-hook-form'
 import { useFormContext } from 'react-hook-form'
 import { getPlaceholderSuggestions } from '../constants/placeholder-suggestions'
-import type { TodoForm } from '../types/form'
 import { getRandomArrIndex } from '../lib/utils'
+import type { TodoForm } from '../types/form'
 import { TodoInput } from './todo-input'
 
 interface TodoListProps {
@@ -13,12 +13,14 @@ interface TodoListProps {
     index: number,
     e: React.KeyboardEvent<HTMLInputElement>
   ) => void
+  onClearItem: (pageIndex: number, itemIndex: number) => void
 }
 
 export function TodoList({
   fields,
   currentPageIndex,
   onInputKeyDown,
+  onClearItem,
 }: Readonly<TodoListProps>) {
   const { register } = useFormContext<TodoForm>()
   const currentPage = fields[currentPageIndex]
@@ -48,6 +50,7 @@ export function TodoList({
               // biome-ignore lint/suspicious/noArrayIndexKey: hook forms workaround
               index
             }.value`}
+            onDone={() => onClearItem(currentPageIndex, index)}
             onKeyDown={(e) => onInputKeyDown(index, e)}
             placeholder={index === 0 ? placeholder : ''}
             register={fieldRegister}

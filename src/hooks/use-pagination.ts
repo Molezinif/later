@@ -22,11 +22,18 @@ export function usePagination(
     }))
   }, [fields.length])
 
-  const goToPage = (page: number) => {
-    if (page < 1 || page > pagination.totalPages) {
+  const goToPage = (page: number, allowFuturePage = false) => {
+    if (page < 1) {
       return
     }
-    setPagination((prev) => ({ ...prev, currentPage: page }))
+    if (!allowFuturePage && page > pagination.totalPages) {
+      return
+    }
+    setPagination((prev) => ({
+      ...prev,
+      currentPage: page,
+      totalPages: allowFuturePage && page > prev.totalPages ? page : prev.totalPages,
+    }))
   }
 
   const goToNextPage = () => {

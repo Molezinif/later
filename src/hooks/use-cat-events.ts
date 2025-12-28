@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
 import { getCatTalk } from '../constants/cat-talk'
-import type { CatEvent } from '../types/cat-event'
 import { isKnownProcrastinator } from '../lib/storage'
 import { getRandomArrIndex } from '../lib/utils'
+import type { CatEvent } from '../types/cat-event'
 
 export function useCatEvents() {
   const catTalk = getCatTalk()
@@ -63,6 +63,33 @@ export function useCatEvents() {
     })
   }
 
+  const showRandomTaskCompletedMessage = () => {
+    const updatedCatTalk = getCatTalk()
+    setCatEvent({
+      ...catEvent,
+      message: getRandomArrIndex(updatedCatTalk.taskCompleted),
+      showAddPageRequest: false,
+    })
+  }
+
+  const showRandomTaskAddedMessage = () => {
+    const updatedCatTalk = getCatTalk()
+    setCatEvent({
+      ...catEvent,
+      message: getRandomArrIndex(updatedCatTalk.taskAdded),
+      showAddPageRequest: false,
+    })
+  }
+
+  const showRandomEmptyTaskDeletedMessage = () => {
+    const updatedCatTalk = getCatTalk()
+    setCatEvent({
+      ...catEvent,
+      message: getRandomArrIndex(updatedCatTalk.emptyTaskDeleted),
+      showAddPageRequest: false,
+    })
+  }
+
   const clearMessage = () => {
     setCatEvent({
       ...catEvent,
@@ -78,6 +105,9 @@ export function useCatEvents() {
     showMessage,
     showRandomAddPageMessage,
     showRandomEnoughSpaceMessage,
+    showRandomTaskCompletedMessage,
+    showRandomTaskAddedMessage,
+    showRandomEmptyTaskDeletedMessage,
     clearMessage,
   }
 }
