@@ -22,9 +22,7 @@ export function findFirstBlankTask(
 } | null {
   const currentPage = todos[currentPageIndex]
   if (currentPage) {
-    const blankIndex = currentPage.items.findIndex(
-      (item) => !item.value.trim()
-    )
+    const blankIndex = currentPage.items.findIndex((item) => !item.value.trim())
     if (blankIndex !== -1) {
       return { pageIndex: currentPageIndex, taskIndex: blankIndex }
     }
