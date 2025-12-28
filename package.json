@@ -15,8 +15,8 @@
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist",
     "knip": "knip",
-    "test:related": "vitest related --run --silent --",
-    "test": "vitest"
+    "test": "vitest --run",
+    "test:ci": "vitest run --silent --coverage"
   },
   "dependencies": {
     "@inlang/paraglide-js": "^2.7.1",
