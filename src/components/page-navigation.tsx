@@ -17,10 +17,13 @@ export function PageNavigation({
   children,
 }: Readonly<PageNavigationProps>) {
   return (
-    <nav aria-label={m.app_pageNavigation()} class='flex flex-row items-center'>
+    <nav
+      aria-label={m.app_pageNavigation()}
+      class='flex flex-row items-center gap-1 sm:gap-0'
+    >
       <Button
         aria-label={m.app_previousPage()}
-        class='text-foreground hover:bg-transparent focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2'
+        class='p-2 text-foreground hover:bg-transparent focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 sm:p-1'
         disabled={!canGoPrevious}
         onClick={onPrevious}
         variant='ghost'
@@ -36,7 +39,7 @@ export function PageNavigation({
       {children}
       <Button
         aria-label={m.app_nextPage()}
-        class='text-foreground hover:bg-transparent focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2'
+        class='p-2 text-foreground hover:bg-transparent focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 sm:p-1'
         disabled={!canGoNext}
         onClick={onNext}
         variant='ghost'

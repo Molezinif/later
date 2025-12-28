@@ -132,32 +132,41 @@ function App() {
           class='flex w-full flex-1 flex-col items-center justify-center gap-2'
           id='main-content'
         >
-          <h2 class='text-center font-semibold text-2xl text-foreground'>
+          <h2 class='px-4 text-center font-semibold text-foreground text-lg sm:text-xl md:text-2xl'>
             {m.app_subtitle()}
           </h2>
-          <div class='flex flex-col gap-1'>
-            {fields.length > 1 && (
-              <div class='mr-[48px] flex flex-1 justify-end bg-background'>
-                <Button
-                  aria-label={`${m.app_addPage()} - Adicionar nova página de tarefas`}
-                  class='text-blue-600 hover:text-blue-700 hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:text-blue-400 dark:hover:text-blue-300'
-                  onClick={handleAddPageClick}
-                  variant='ghost'
-                >
-                  <Plus />
-                  {m.app_addPage()}
-                </Button>
-              </div>
-            )}
-
+          <div class='flex w-full max-w-[600px] flex-col gap-1 px-4 sm:px-0'>
             {(() => {
               const todoList = (
-                <TodoList
-                  currentPageIndex={pagination.currentPage - 1}
-                  fields={fields}
-                  onClearItem={handleClearItem}
-                  onInputKeyDown={handleInputKeyDown}
-                />
+                <div class='flex w-full flex-col gap-2'>
+                  {fields.length > 1 && (
+                    <div class='flex flex-1 justify-end bg-background'>
+                      <Button
+                        aria-label={`${m.app_addPage()} - Adicionar nova página de tarefas`}
+                        class='px-2 text-blue-600 hover:bg-transparent hover:text-blue-700 hover:underline focus:bg-transparent focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:text-blue-400 dark:hover:text-blue-300'
+                        onClick={handleAddPageClick}
+                        variant='ghost'
+                      >
+                        <Plus />
+                        {m.app_addPage()}
+                      </Button>
+                    </div>
+                  )}
+                  <TodoList
+                    currentPageIndex={pagination.currentPage - 1}
+                    fields={fields}
+                    onClearItem={handleClearItem}
+                    onInputKeyDown={handleInputKeyDown}
+                  />
+                  {fields.length > 1 && (
+                    <div class='flex flex-1 justify-end bg-background pr-2'>
+                      <p class='text-foreground text-sm sm:text-base'>
+                        {m.app_page()} {pagination.currentPage} {m.app_of()}{' '}
+                        {pagination.totalPages}
+                      </p>
+                    </div>
+                  )}
+                </div>
               )
 
               return fields.length > 1 ? (
@@ -173,15 +182,6 @@ function App() {
                 todoList
               )
             })()}
-
-            {fields.length > 1 && (
-              <div class='mr-[50px] flex flex-1 justify-end bg-background'>
-                <p class='text-base text-foreground'>
-                  {m.app_page()} {pagination.currentPage} {m.app_of()}{' '}
-                  {pagination.totalPages}
-                </p>
-              </div>
-            )}
           </div>
           {showMoreStuffButton && (
             <Button
@@ -199,7 +199,7 @@ function App() {
           {catEvent.message && <span>{catEvent.message}</span>}
         </div>
 
-        <footer class='flex justify-end p-4'>
+        <footer class='flex justify-center p-2 sm:justify-end sm:p-4'>
           <CatDialog
             addPageCallback={handleAddPage}
             handleCloseDialog={clearMessage}

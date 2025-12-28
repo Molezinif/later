@@ -42,7 +42,7 @@ export function CatDialog({
         aria-describedby='cat-dialog-description'
         aria-labelledby='cat-dialog-title'
         aria-modal='true'
-        class='relative flex max-h-[152px] w-[800px] flex-row rounded-lg border bg-white dark:bg-background'
+        class='relative mx-4 flex max-h-none w-full max-w-[800px] flex-col rounded-lg border bg-white sm:mx-0 sm:max-h-[152px] sm:w-[800px] sm:flex-row dark:bg-background'
         ref={dialogRef}
         role='dialog'
       >
@@ -65,7 +65,7 @@ export function CatDialog({
             />
           </svg>
         </Button>
-        <div class='shrink-0 border-r-2 p-3'>
+        <div class='flex shrink-0 justify-center border-b-2 p-3 sm:justify-start sm:border-r-2 sm:border-b-0'>
           <CatChar />
         </div>
         <div class='flex-1 p-3'>
@@ -82,7 +82,7 @@ export function CatDialog({
               })}
             />
           </div>
-          <div class='flex w-full flex-row justify-end gap-2'>
+          <div class='mt-2 flex w-full flex-col justify-end gap-2 sm:flex-row'>
             <Button
               aria-label={m.app_completeTasks()}
               onClick={handleCloseDialog}
@@ -112,7 +112,7 @@ export function CatDialog({
       aria-describedby='cat-message-description'
       aria-labelledby='cat-message-title'
       aria-modal='true'
-      class='relative flex max-h-[152px] w-[800px] flex-row rounded-lg border bg-white dark:bg-background'
+      class='relative mx-4 flex max-h-none w-full max-w-[800px] flex-col rounded-lg border bg-white sm:mx-0 sm:max-h-[152px] sm:w-[800px] sm:flex-row dark:bg-background'
       ref={dialogRef}
       role='dialog'
     >
@@ -131,7 +131,7 @@ export function CatDialog({
           />
         </svg>
       </Button>
-      <div class='shrink-0 border-r-2 p-3'>
+      <div class='flex shrink-0 justify-center border-b-2 p-3 sm:justify-start sm:border-r-2 sm:border-b-0'>
         <CatChar />
       </div>
       <div class='h-full flex-1 p-3'>
