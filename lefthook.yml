@@ -15,4 +15,4 @@ pre-push:
       run: pnpm run build
 
     - name: test
-      run: pnpm run test:related
+      run: pnpm run test:related {push_files}
