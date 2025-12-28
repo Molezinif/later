@@ -14,11 +14,11 @@ export function Header() {
   const { setTheme, theme } = useTheme()
 
   return (
-    <header class='sticky top-0 z-50 flex w-full flex-row items-center justify-between border-grid border-b bg-background/95 p-4 backdrop-blur supports-[backdrop-filter]:bg-background/60'>
-      <h1 class='scroll-m-20 font-semibold text-3xl text-foreground tracking-tight'>
+    <header class='sticky top-0 z-50 flex w-full flex-row items-center justify-between border-grid border-b bg-background/95 p-2 backdrop-blur supports-[backdrop-filter]:bg-background/60 sm:p-4'>
+      <h1 class='scroll-m-20 font-semibold text-foreground text-xl tracking-tight sm:text-2xl md:text-3xl'>
         {m.app_title()}
       </h1>
-      <div class='flex flex-row gap-3'>
+      <div class='flex flex-row gap-1 sm:gap-3'>
         <Select
           onValueChange={(value) => {
             setLocale(value as 'en' | 'pt')

@@ -34,7 +34,7 @@ export function TodoList({
   }
 
   return (
-    <div class='flex w-[600px] flex-col gap-[1px] rounded-md bg-border'>
+    <div class='flex w-full max-w-[600px] flex-col gap-[1px] rounded-md bg-border'>
       {currentPage.items.map((_, index) => {
         const fieldRegister = register(
           `todos.${currentPageIndex}.items.${index}.value`

@@ -1,50 +1,88 @@
-# React + TypeScript + Vite
+# Later
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A playful task management app that embraces procrastination with a sarcastic cat companion named "Taskmeow".
 
-Currently, two official plugins are available:
+## Screenshots
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### First Access (Dark Theme)
+![First Access Dark Theme](public/showcase_first_access.png)
 
-## Expanding the ESLint configuration
+### First Access (Light Theme)
+![First Access Light Theme](public/showcase_light_theme_first_access.png)
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+### Task Management
+![Task Management Light Theme](public/showcase_light_theme.png)
 
-- Configure the top-level `parserOptions` property like this:
+### Multi-page Organization
+![Multiple Pages](public/showcase_new_page_added.png)
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+### Cat Companion Dialog
+![Cat Dialog](public/showcase_new_page_request.png)
+
+## About
+
+**Later** takes a different approach to productivity - instead of guilt-tripping users into getting things done, it provides a humorous, lighthearted experience for organizing tasks. The app features a witty cat character that delivers sarcastic commentary as you manage your to-do list.
+
+## Features
+
+- **Multi-page task organization** - Organize tasks across multiple pages (5 tasks per page)
+- **Persistent storage** - Tasks automatically saved to localStorage
+- **Cat companion** - Sarcastic feedback and witty messages throughout
+- **Dark/Light themes** - Full theme support with system preference detection
+- **Internationalization** - English and Portuguese language support
+- **Accessibility-focused** - ARIA labels, keyboard navigation, screen reader support
+- **Responsive design** - Mobile-first approach with Tailwind CSS
+
+## Tech Stack
+
+| Category | Technologies |
+|----------|-------------|
+| **Framework** | React 18, TypeScript, Vite |
+| **Styling** | Tailwind CSS, Radix UI |
+| **Forms** | React Hook Form |
+| **i18n** | Inlang Paraglide |
+| **Icons** | Lucide React, PixelArtIcons |
+| **Linting** | Biome |
+
+## Getting Started
+
+```bash
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
+
+# Build for production
+npm run build
+
+# Run linter
+npm run lint
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+## Project Structure
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
 ```
+src/
+├── components/     # React components (cat-dialog, header, todo-list, etc.)
+├── hooks/          # Custom hooks (use-todos, use-pagination, use-cat-events)
+├── lib/            # Utilities and i18n configuration
+├── constants/      # App constants and cat messages
+├── types/          # TypeScript type definitions
+└── assets/         # Static assets
+
+messages/           # i18n translation files (en.json, pt.json)
+```
+
+## Contributing
+
+Contributions are welcome! The codebase follows these patterns:
+
+- **Components** use functional React with TypeScript
+- **State management** handled via React Hook Form and custom hooks
+- **Styling** uses Tailwind CSS utility classes
+- **Translations** managed through Inlang Paraglide in `/messages`
+
+## License
+
+MIT
