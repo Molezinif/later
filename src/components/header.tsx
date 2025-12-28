@@ -36,6 +36,7 @@ export function Header() {
         </Select>
         <Button
           aria-label={m.app_github()}
+          data-testid='github-button'
           onClick={redirectToMyGithub}
           size='icon'
           variant='ghost'
@@ -50,6 +51,7 @@ export function Header() {
         </Button>
         <Button
           aria-label={theme === 'dark' ? m.app_themeLight() : m.app_themeDark()}
+          data-testid='theme-toggle'
           onClick={() => {
             if (theme === 'dark') {
               setTheme('light')

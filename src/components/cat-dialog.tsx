@@ -85,6 +85,7 @@ export function CatDialog({
           <div class='mt-2 flex w-full flex-col justify-end gap-2 sm:flex-row'>
             <Button
               aria-label={m.app_completeTasks()}
+              data-testid='complete-tasks-button'
               onClick={handleCloseDialog}
               variant={'blue'}
             >
@@ -92,6 +93,7 @@ export function CatDialog({
             </Button>
             <Button
               aria-label={m.app_keepProcrastinating()}
+              data-testid='procrastinate-button'
               onClick={addPageCallback}
               variant='destructive'
             >

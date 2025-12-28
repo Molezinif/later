@@ -1,4 +1,7 @@
 import '@testing-library/jest-dom'
+import React from 'react'
+
+globalThis.React = React
 
 const localStorageMock = {
   store: {} as Record<string, string>,
@@ -18,6 +21,22 @@ const localStorageMock = {
 
 Object.defineProperty(globalThis, 'localStorage', {
   value: localStorageMock,
+})
+
+const noop = () => undefined
+
+Object.defineProperty(window, 'matchMedia', {
+  writable: true,
+  value: (query: string) => ({
+    matches: false,
+    media: query,
+    onchange: null,
+    addListener: noop,
+    removeListener: noop,
+    addEventListener: noop,
+    removeEventListener: noop,
+    dispatchEvent: () => false,
+  }),
 })
 
 beforeEach(() => {
