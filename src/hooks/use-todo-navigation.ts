@@ -52,14 +52,17 @@ export function useTodoNavigation({
 
   const focusOnBlankTask = useCallback(
     (pageIndex: number, taskIndex: number) => {
-      goToPage(pageIndex + 1)
-      setTimeout(() => {
+      const targetPage = pageIndex + 1
+      if (currentPageIndex + 1 !== targetPage) {
+        goToPage(targetPage)
+      }
+      requestAnimationFrame(() => {
         setFocus(
           `todos.${pageIndex}.items.${taskIndex}.value` as `todos.${number}.items.${number}.value`
         )
-      }, 1)
+      })
     },
-    [goToPage, setFocus]
+    [currentPageIndex, goToPage, setFocus]
   )
 
   return {

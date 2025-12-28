@@ -32,7 +32,8 @@ export function usePagination(
     setPagination((prev) => ({
       ...prev,
       currentPage: page,
-      totalPages: allowFuturePage && page > prev.totalPages ? page : prev.totalPages,
+      totalPages:
+        allowFuturePage && page > prev.totalPages ? page : prev.totalPages,
     }))
   }
 

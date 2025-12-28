@@ -12,7 +12,7 @@ import { useShowMoreStuffButton } from './hooks/use-show-more-stuff-button'
 import { useTodoNavigation } from './hooks/use-todo-navigation'
 import { useTodos } from './hooks/use-todos'
 import { m } from './lib/i18n'
-import { countNonEmptyTasks, hasBlankTask } from './lib/validation'
+import { countNonEmptyTasks, findFirstBlankTask } from './lib/validation'
 
 function App() {
   const { methods, fields, getValues, setFocus, addPage, clearItem } =
@@ -50,7 +50,8 @@ function App() {
 
   const handleAddPageClick = useCallback(() => {
     const formTodos = getValues().todos
-    const blankTask = hasBlankTask(formTodos)
+    const currentPageIndex = pagination.currentPage - 1
+    const blankTask = findFirstBlankTask(formTodos, currentPageIndex)
 
     if (blankTask) {
       focusOnBlankTask(blankTask.pageIndex, blankTask.taskIndex)
@@ -61,6 +62,7 @@ function App() {
     showAddPageRequest()
   }, [
     getValues,
+    pagination.currentPage,
     focusOnBlankTask,
     showAddPageRequest,
     showRandomEnoughSpaceMessage,

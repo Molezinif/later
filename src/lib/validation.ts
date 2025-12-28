@@ -13,6 +13,32 @@ export function hasBlankTask(todos: TodoForm['todos']): {
   return null
 }
 
+export function findFirstBlankTask(
+  todos: TodoForm['todos'],
+  currentPageIndex: number
+): {
+  pageIndex: number
+  taskIndex: number
+} | null {
+  const currentPage = todos[currentPageIndex]
+  if (currentPage) {
+    const blankIndex = currentPage.items.findIndex(
+      (item) => !item.value.trim()
+    )
+    if (blankIndex !== -1) {
+      return { pageIndex: currentPageIndex, taskIndex: blankIndex }
+    }
+  }
+
+  for (let i = 0; i < todos.length; i++) {
+    const blankIndex = todos[i].items.findIndex((item) => !item.value.trim())
+    if (blankIndex !== -1) {
+      return { pageIndex: i, taskIndex: blankIndex }
+    }
+  }
+  return null
+}
+
 export function isPageFilled(
   page: TodoForm['todos'][0],
   totalPages: number

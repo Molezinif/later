@@ -78,7 +78,11 @@ export function useTodos() {
 
       if (shouldRemovePage) {
         remove(pageIndex)
-        return { hadValue: true, pageRemoved: true, removedPageIndex: pageIndex }
+        return {
+          hadValue: true,
+          pageRemoved: true,
+          removedPageIndex: pageIndex,
+        }
       }
 
       return { hadValue: true, pageRemoved: false }
